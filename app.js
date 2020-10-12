@@ -59,8 +59,6 @@ function handleDigit(digit) {
     calculator.displayValue =
       displayValue === '0' ? digit : displayValue + digit;
   }
-
-  console.log(calculator);
 }
 
 function handleNegativePositive() {
@@ -117,8 +115,6 @@ function handleOperator(operator) {
 
   calculator.prevOperator = operator;
   calculator.isSecondOperand = true;
-
-  console.log(calculator);
 }
 
 function operate(operator, firstOperand, secondOperand) {
