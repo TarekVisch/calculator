@@ -17,3 +17,67 @@ body {
   font-size: 1.6rem;
   font-weight: 400;
 }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 20rem;
+}
+
+.calculator {
+  min-width: 320px;
+  width: 35rem;
+  margin: 0 auto;
+  background-color: #0b090a;
+  border-radius: 0.5rem;
+
+  .screen {
+    text-align: right;
+    padding: 3rem;
+    color: #f5f3f4;
+    font-size: 2.5rem;
+    font-weight: 500;
+  }
+
+  .keys {
+    &-row {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .key {
+      font-family: inherit;
+      width: 25%;
+      padding: 3rem;
+      font-size: 2rem;
+      border: 1px solid #0b090a;
+      border-radius: 0.5rem;
+      background-color: #dee2e6;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #ced4da;
+      }
+    }
+
+    .operator {
+      background-color: #fb8b24;
+
+      &:hover {
+        background-color: #e87104;
+      }
+    }
+
+    .gray {
+      background-color: #adb5bd;
+
+      &:hover {
+        background-color: #6c757d;
+      }
+    }
+
+    .double {
+      width: 50%;
+    }
+  }
+}
