@@ -3,6 +3,7 @@ const calculator = {
   firstOperand: null,
   prevOperator: null,
   isSecondOperand: false,
+  isSecondOperandZero: false,
 };
 
 const keys = document.querySelector('.keys');
@@ -23,7 +24,7 @@ keys.addEventListener('click', (e) => {
       handleOperator(value);
       break;
     case '±':
-      handleNegativePositive(value);
+      handleNegativePositive();
       break;
     case '.':
       handleDecimal(value);
@@ -46,18 +47,23 @@ function updateDisplay() {
 }
 
 function handleDigit(digit) {
-  const { displayValue, isSecondOperand } = calculator;
+  const { displayValue, isSecondOperand, isSecondOperandZero } = calculator;
 
   if (isSecondOperand) {
     calculator.displayValue = digit;
     calculator.isSecondOperand = false;
+  } else if (isSecondOperandZero) {
+    clearCalculator();
+    calculator.displayValue = digit;
   } else {
     calculator.displayValue =
       displayValue === '0' ? digit : displayValue + digit;
   }
+
+  console.log(calculator);
 }
 
-function handleNegativePositive(digit) {
+function handleNegativePositive() {
   const { displayValue } = calculator;
 
   let input = parseFloat(displayValue);
@@ -95,13 +101,24 @@ function handleOperator(operator) {
   if (firstOperand === null && !Number.isNaN(input)) {
     calculator.firstOperand = input;
   } else if (prevOperator) {
+    if (input === 0 && !calculator.isSecondOperandZero) {
+      calculator.displayValue = 'Math Error';
+      calculator.isSecondOperandZero = true;
+      return;
+    } else if (calculator.isSecondOperandZero) {
+      clearCalculator();
+      return;
+    }
     const result = operate(prevOperator, firstOperand, input);
 
     calculator.displayValue = `${parseFloat(result.toFixed(1))}`;
     calculator.firstOperand = result;
   }
+
   calculator.prevOperator = operator;
   calculator.isSecondOperand = true;
+
+  console.log(calculator);
 }
 
 function operate(operator, firstOperand, secondOperand) {
@@ -125,6 +142,7 @@ function clearCalculator() {
   calculator.displayValue = '0';
   calculator.firstOperand = null;
   calculator.isSecondOperand = false;
+  calculator.isSecondOperandZero = false;
   calculator.prevOperator = null;
 }
 
